@@ -1,0 +1,116 @@
+{% extends "auctions/layout.html" %}
+
+{% block auction_list %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-xl-6">
+            <!-- Page Header -->
+            <div class="text-center mb-5">
+                <h1 class="text-primary-03 mb-2">
+                    <i class="bi bi-plus-circle me-2"></i>Create New Listing
+                </h1>
+                <p class="text-space">List your item for auction and start receiving bids</p>
+            </div>
+
+            <!-- Create Listing Form -->
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="bi bi-hammer me-2"></i>Listing Details
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <form action="{% url 'create_listing' %}" method="post">
+                        {% csrf_token %}
+                        
+                        <!-- Title -->
+                        <div class="mb-4">
+                            <label for="title" class="form-label">
+                                <i class="bi bi-tag me-1"></i>Title *
+                            </label>
+                            <input type="text" name="title" id="title" class="form-control" placeholder="Enter a descriptive title for your item" required>
+                            <div class="form-text">Choose a clear, descriptive title that will attract bidders</div>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="mb-4">
+                            <label for="description" class="form-label">
+                                <i class="bi bi-file-text me-1"></i>Description *
+                            </label>
+                            <textarea name="description" id="description" class="form-control" rows="4" placeholder="Describe your item in detail. Include condition, features, and any relevant information..." required></textarea>
+                            <div class="form-text">Provide detailed information about your item's condition and features</div>
+                        </div>
+
+                        <!-- Image URL -->
+                        <div class="mb-4">
+                            <label for="image_url" class="form-label">
+                                <i class="bi bi-image me-1"></i>Image URL
+                            </label>
+                            <input type="url" name="image_url" id="image_url" class="form-control" placeholder="https://example.com/image.jpg">
+                            <div class="form-text">Add an image URL to showcase your item (optional but recommended)</div>
+                        </div>
+
+                        <!-- Category and Starting Bid Row -->
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <label for="category" class="form-label">
+                                    <i class="bi bi-tags me-1"></i>Category *
+                                </label>
+                                <select name="category" id="category" class="form-select" required>
+                                    <option value="">Select a category...</option>
+                                    <option value="electronics">Electronics</option>
+                                    <option value="fashion">Fashion</option>
+                                    <option value="home">Home & Garden</option>
+                                    <option value="vehicles">Vehicles</option>
+                                    <option value="collectibles">Collectibles</option>
+                                    <option value="sports">Sports & Recreation</option>
+                                    <option value="books">Books & Media</option>
+                                    <option value="art">Art & Antiques</option>
+                                    <option value="jewelry">Jewelry & Watches</option>
+                                    <option value="toys">Toys & Games</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <label for="starting_bid" class="form-label">
+                                    <i class="bi bi-currency-dollar me-1"></i>Starting Bid *
+                                </label>
+                                <div class="input-group">
+                                    <span class="input-group-text">$</span>
+                                    <input type="number" name="starting_bid" id="starting_bid" class="form-control" placeholder="0.00" min="0" step="0.01" required>
+                                </div>
+                                <div class="form-text">Set the minimum bid amount</div>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="{% url 'listings:index' %}" class="btn btn-outline-secondary me-md-2">
+                                <i class="bi bi-arrow-left me-2"></i>Cancel
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-check-circle me-2"></i>Create Listing
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Tips Card -->
+            <div class="card mt-4 bg-cloud border-0">
+                <div class="card-body">
+                    <h6 class="text-arsenic mb-3">
+                        <i class="bi bi-lightbulb me-2"></i>Tips for a Successful Listing
+                    </h6>
+                    <ul class="list-unstyled mb-0 text-graphite">
+                        <li class="mb-2"><i class="bi bi-check-circle text-primary-04 me-2"></i>Use clear, high-quality images</li>
+                        <li class="mb-2"><i class="bi bi-check-circle text-primary-04 me-2"></i>Write detailed descriptions</li>
+                        <li class="mb-2"><i class="bi bi-check-circle text-primary-04 me-2"></i>Set a competitive starting bid</li>
+                        <li class="mb-0"><i class="bi bi-check-circle text-primary-04 me-2"></i>Choose the right category</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

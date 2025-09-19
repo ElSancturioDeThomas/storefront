@@ -1,0 +1,234 @@
+/* Custom Color Palette */
+:root {
+    --primary-01: #FAFBFF;  /* Backgrounds, highlights */
+    --primary-02: #004EEA;  /* Logo, buttons, key accents */
+    --primary-03: #001B35;  /* Headers, strong text, dark backgrounds */
+    --primary-04: #008DED;  /* Highlights, links, CTAs */
+    --cloud: #EDEFF7;       /* Light backgrounds */
+    --smoke: #D3D6E0;       /* Secondary backgrounds, dividers */
+    --steel: #BCBFCC;       /* Borders, icons */
+    --space: #9DA2B3;       /* Subtext, UI elements */
+    --graphite: #6E7180;    /* Body text */
+    --arsenic: #40424D;     /* Strong text, dark UI */
+    --phantom: #1E1E24;     /* Dark mode background */
+    --black: #000000;       /* Text, deepest accents */
+}
+
+/* Bootstrap Color Overrides */
+.bg-primary-01 { background-color: var(--primary-01) !important; }
+.bg-primary-02 { background-color: var(--primary-02) !important; }
+.bg-primary-03 { background-color: var(--primary-03) !important; }
+.bg-primary-04 { background-color: var(--primary-04) !important; }
+.bg-cloud { background-color: var(--cloud) !important; }
+.bg-smoke { background-color: var(--smoke) !important; }
+.bg-steel { background-color: var(--steel) !important; }
+.bg-space { background-color: var(--space) !important; }
+.bg-graphite { background-color: var(--graphite) !important; }
+.bg-arsenic { background-color: var(--arsenic) !important; }
+.bg-phantom { background-color: var(--phantom) !important; }
+
+.text-primary-01 { color: var(--primary-01) !important; }
+.text-primary-02 { color: var(--primary-02) !important; }
+.text-primary-03 { color: var(--primary-03) !important; }
+.text-primary-04 { color: var(--primary-04) !important; }
+.text-cloud { color: var(--cloud) !important; }
+.text-smoke { color: var(--smoke) !important; }
+.text-steel { color: var(--steel) !important; }
+.text-space { color: var(--space) !important; }
+.text-graphite { color: var(--graphite) !important; }
+.text-arsenic { color: var(--arsenic) !important; }
+.text-phantom { color: var(--phantom) !important; }
+
+/* Custom Button Styles */
+.btn-primary {
+    background-color: var(--primary-02);
+    border-color: var(--primary-02);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-04);
+    border-color: var(--primary-04);
+}
+
+.btn-outline-primary {
+    color: var(--primary-02);
+    border-color: var(--primary-02);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-02);
+    border-color: var(--primary-02);
+}
+
+/* Card Styles */
+.card {
+    border: 1px solid var(--smoke);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+}
+
+.card-header {
+    background-color: var(--cloud);
+    border-bottom: 1px solid var(--smoke);
+    color: var(--arsenic);
+    font-weight: 600;
+}
+
+/* Form Styles */
+.form-control {
+    border: 1px solid var(--steel);
+    border-radius: 8px;
+    padding: 12px 16px;
+    background-color: var(--primary-01);
+    color: var(--arsenic);
+}
+
+.form-control:focus {
+    border-color: var(--primary-02);
+    box-shadow: 0 0 0 0.2rem rgba(0, 78, 234, 0.25);
+    background-color: white;
+}
+
+.form-label {
+    color: var(--arsenic);
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+/* Navigation Styles */
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.nav-link {
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--primary-02) !important;
+}
+
+/* Badge Styles */
+.badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+/* Alert Styles */
+.alert {
+    border-radius: 8px;
+    border: none;
+}
+
+.alert-primary {
+    background-color: rgba(0, 78, 234, 0.1);
+    color: var(--primary-03);
+    border-left: 4px solid var(--primary-02);
+}
+
+/* Dropdown Styles */
+.dropdown-menu {
+    border: 1px solid var(--smoke);
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-item {
+    color: var(--arsenic);
+    padding: 8px 16px;
+}
+
+.dropdown-item:hover {
+    background-color: var(--cloud);
+    color: var(--primary-03);
+}
+
+/* Listing Card Specific Styles */
+.listing-card {
+    transition: all 0.3s ease;
+    border: 1px solid var(--smoke);
+}
+
+.listing-card:hover {
+    border-color: var(--primary-02);
+    box-shadow: 0 4px 20px rgba(0, 78, 234, 0.15);
+}
+
+.listing-image {
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px 8px 0 0;
+}
+
+.listing-price {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--primary-02);
+}
+
+.listing-category {
+    font-size: 0.875rem;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Footer Styles */
+footer {
+    margin-top: auto;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .navbar-brand {
+        font-size: 1.25rem;
+    }
+    
+    .card {
+        margin-bottom: 1rem;
+    }
+    
+    .listing-image {
+        height: 150px;
+    }
+}
+
+/* Category Card Styles */
+.category-card {
+    transition: all 0.3s ease;
+    border: 1px solid var(--smoke);
+    cursor: pointer;
+}
+
+.category-card:hover {
+    border-color: var(--primary-02);
+    box-shadow: 0 4px 20px rgba(0, 78, 234, 0.15);
+    transform: translateY(-2px);
+}
+
+.category-card .card-body {
+    padding: 2rem 1.5rem;
+}
+
+/* Utility Classes */
+.text-muted-custom {
+    color: var(--space) !important;
+}
+
+.border-custom {
+    border-color: var(--smoke) !important;
+}
+
+.shadow-custom {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+}

@@ -1,0 +1,205 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<div class="container">
+    <!-- Messages -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- Auction Status Alert -->
+    {% if is_closed %}
+    <div class="alert alert-warning border-0 shadow-sm mb-4">
+        <div class="d-flex align-items-center">
+            <i class="bi bi-exclamation-triangle-fill text-warning me-3" style="font-size: 1.5rem;"></i>
+            <div>
+                <h4 class="alert-heading mb-1">Auction Closed</h4>
+                {% if bid %}
+                    <p class="mb-1"><strong>Winning Bid:</strong> <span class="listing-price">${{ bid.current_bid }}</span></p>
+                    <p class="mb-0"><strong>Winner:</strong> {{ bid.user.username }}</p>
+                {% else %}
+                    <p class="mb-0">No bids were placed on this auction.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="row g-4">
+        <!-- Main Content -->
+        <div class="col-lg-8">
+            <!-- Listing Image -->
+            <div class="card mb-4">
+                {% if listing.image_url %}
+                <img src="{{ listing.image_url }}" class="card-img-top" alt="{{ listing.title }}" style="height: 400px; object-fit: cover;">
+                {% else %}
+                <div class="card-img-top bg-cloud d-flex align-items-center justify-content-center" style="height: 400px;">
+                    <i class="bi bi-image text-steel" style="font-size: 5rem;"></i>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Listing Details -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title text-primary-03 mb-0">{{ listing.title }}</h2>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-sm-3"><strong class="text-arsenic">Category:</strong></div>
+                        <div class="col-sm-9">
+                            <span class="badge bg-primary-04">{{ listing.category|default:"Uncategorized" }}</span>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-3"><strong class="text-arsenic">Seller:</strong></div>
+                        <div class="col-sm-9 text-graphite">{{ listing.user.username }}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-3"><strong class="text-arsenic">Created:</strong></div>
+                        <div class="col-sm-9 text-graphite">{{ listing.date_created|date:"F d, Y \a\t g:i A" }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3"><strong class="text-arsenic">Description:</strong></div>
+                        <div class="col-sm-9 text-graphite">{{ listing.description|linebreaks }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comments Section -->
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="bi bi-chat-dots me-2"></i>Comments ({{ listing.comment.all|length }})
+                    </h5>
+                </div>
+                <div class="card-body">
+                    {% for comment in listing.comment.all %}
+                    <div class="border-bottom border-smoke pb-3 mb-3">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <strong class="text-arsenic">{{ comment.user.username }}</strong>
+                            <small class="text-space">{{ comment.comment_date|date:"M d, Y g:i A" }}</small>
+                        </div>
+                        <p class="text-graphite mb-0">{{ comment.comment|linebreaks }}</p>
+                    </div>
+                    {% empty %}
+                    <p class="text-space text-center py-3">No comments yet. Be the first to comment!</p>
+                    {% endfor %}
+
+                    <!-- Add Comment Form -->
+                    {% if user.is_authenticated %}
+                    <form method="post" action="{% url 'listings:comment' listing.id %}" class="mt-4">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="comment_text" class="form-label">Add a comment</label>
+                            <textarea name="comment_text" class="form-control" rows="3" placeholder="Share your thoughts about this item..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-outline-primary">
+                            <i class="bi bi-send me-2"></i>Post Comment
+                        </button>
+                    </form>
+                    {% else %}
+                    <div class="text-center py-3">
+                        <p class="text-space">Please <a href="{% url 'login' %}" class="text-primary-04">log in</a> to add a comment.</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <!-- Bidding Section -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="bi bi-hammer me-2"></i>Current Bid
+                    </h5>
+                </div>
+                <div class="card-body text-center">
+                    <div class="listing-price mb-3">${{ bid.current_bid|default:"No bids" }}</div>
+                    {% if not is_closed %}
+                        <small class="text-space">Minimum bid: ${{ bid.bid_required|default:bid.current_bid|add:5 }}</small>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            {% if user.is_authenticated %}
+            <div class="card mb-4">
+                <div class="card-body">
+                    <!-- Watchlist -->
+                    <div class="mb-3">
+                        {% if in_watchlist %}
+                        <form method="post" action="{% url 'delete_from_watchlist' listing.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-danger w-100">
+                                <i class="bi bi-heart-fill me-2"></i>Remove from Watchlist
+                            </button>
+                        </form>
+                        {% else %}
+                        <form method="post" action="{% url 'add_to_watchlist' listing.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-primary w-100">
+                                <i class="bi bi-heart me-2"></i>Add to Watchlist
+                            </button>
+                        </form>
+                        {% endif %}
+                    </div>
+
+                    <!-- Bidding Form -->
+                    {% if not is_closed and listing.user != user %}
+                    <form method="post" action="{% url 'listings:place_bid' listing.id %}">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="bid_amount" class="form-label">Your Bid</label>
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                <input type="number" name="bid_amount" class="form-control" step="5" min="{{ bid.bid_required }}" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100" onClick="return confirm('Are you sure you want to place this bid?')">
+                            <i class="bi bi-hammer me-2"></i>Place Bid
+                        </button>
+                    </form>
+                    {% elif listing.user == user %}
+                    <div class="text-center">
+                        <p class="text-space mb-3">This is your listing</p>
+                        {% if not is_closed %}
+                        <form method="post" action="{% url 'listings:close_listing' listing.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-warning w-100" onClick="return confirm('Are you sure you want to close this auction?')">
+                                <i class="bi bi-x-circle me-2"></i>Close Auction
+                            </button>
+                        </form>
+                        {% endif %}
+                        {% if is_closed %}
+                        <form method="post" action="{% url 'listings:remove_listing' listing.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger w-100" onClick="return confirm('Are you sure you want to remove this auction?')">
+                                <i class="bi bi-trash me-2"></i>Remove Auction
+                            </button>
+                        </form>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% else %}
+            <div class="card mb-4">
+                <div class="card-body text-center">
+                    <p class="text-space mb-3">Please log in to place bids or add to watchlist</p>
+                    <a href="{% url 'login' %}" class="btn btn-primary me-2">Log In</a>
+                    <a href="{% url 'register' %}" class="btn btn-outline-primary">Register</a>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

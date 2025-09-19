@@ -1,0 +1,173 @@
+{% extends "auctions/layout.html" %}
+
+{% block auction_list %}
+<div class="container">
+    {% if show_categories %}
+        <!-- Category List View -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <h1 class="text-primary-03 mb-2">
+                    <i class="bi bi-tags me-2"></i>Browse Categories
+                </h1>
+                <p class="text-space">Select a category to view all listings</p>
+            </div>
+        </div>
+
+        {% if categories %}
+        <div class="row g-4">
+            {% for category in categories %}
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card category-card h-100">
+                    <div class="card-body text-center d-flex flex-column justify-content-center">
+                        <div class="mb-3">
+                            {% if category.category == 'electronics' %}
+                                <i class="bi bi-laptop text-primary-02" style="font-size: 3rem;"></i>
+                            {% elif category.category == 'fashion' %}
+                                <i class="bi bi-bag text-primary-02" style="font-size: 3rem;"></i>
+                            {% elif category.category == 'home' %}
+                                <i class="bi bi-house text-primary-02" style="font-size: 3rem;"></i>
+                            {% elif category.category == 'vehicles' %}
+                                <i class="bi bi-car-front text-primary-02" style="font-size: 3rem;"></i>
+                            {% elif category.category == 'collectibles' %}
+                                <i class="bi bi-gem text-primary-02" style="font-size: 3rem;"></i>
+                            {% elif category.category == 'sports' %}
+                                <i class="bi bi-trophy text-primary-02" style="font-size: 3rem;"></i>
+                            {% elif category.category == 'books' %}
+                                <i class="bi bi-book text-primary-02" style="font-size: 3rem;"></i>
+                            {% elif category.category == 'art' %}
+                                <i class="bi bi-palette text-primary-02" style="font-size: 3rem;"></i>
+                            {% elif category.category == 'jewelry' %}
+                                <i class="bi bi-diamond text-primary-02" style="font-size: 3rem;"></i>
+                            {% elif category.category == 'toys' %}
+                                <i class="bi bi-joystick text-primary-02" style="font-size: 3rem;"></i>
+                            {% elif category.category == 'other' %}
+                                <i class="bi bi-grid text-primary-02" style="font-size: 3rem;"></i>
+                            {% endif %}
+                        </div>
+                        <h5 class="card-title text-arsenic mb-3">
+                            {% if category.category == 'electronics' %}
+                                Electronics
+                            {% elif category.category == 'fashion' %}
+                                Fashion
+                            {% elif category.category == 'home' %}
+                                Home & Garden
+                            {% elif category.category == 'vehicles' %}
+                                Vehicles
+                            {% elif category.category == 'collectibles' %}
+                                Collectibles
+                            {% elif category.category == 'sports' %}
+                                Sports & Recreation
+                            {% elif category.category == 'books' %}
+                                Books & Media
+                            {% elif category.category == 'art' %}
+                                Art & Antiques
+                            {% elif category.category == 'jewelry' %}
+                                Jewelry & Watches
+                            {% elif category.category == 'toys' %}
+                                Toys & Games
+                            {% elif category.category == 'other' %}
+                                Other
+                            {% endif %}
+                        </h5>
+                        <a href="{% url 'category_page' category.category %}" class="btn btn-outline-primary">
+                            <i class="bi bi-arrow-right me-2"></i>View Listings
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="row">
+            <div class="col-12">
+                <div class="text-center py-5">
+                    <i class="bi bi-tags text-steel" style="font-size: 4rem;"></i>
+                    <h3 class="text-arsenic mt-3">No Categories Available</h3>
+                    <p class="text-space">No categories are available at the moment.</p>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+    {% else %}
+        <!-- Category Listings View -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h1 class="text-primary-03 mb-2">
+                            <i class="bi bi-tag me-2"></i>{{ category_name|title }} Listings
+                        </h1>
+                        <p class="text-space">All items in the {{ category_name|title }} category</p>
+                    </div>
+                    <a href="{% url 'category_bar' %}" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left me-2"></i>Back to Categories
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        {% if listings %}
+        <div class="row g-4">
+            {% for listing in listings %}
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card listing-card h-100">
+                    {% if listing.image_url %}
+                    <img src="{{ listing.image_url }}" class="card-img-top listing-image" alt="{{ listing.title }}">
+                    {% else %}
+                    <div class="card-img-top listing-image bg-cloud d-flex align-items-center justify-content-center">
+                        <i class="bi bi-image text-steel" style="font-size: 3rem;"></i>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="card-body d-flex flex-column">
+                        <div class="mb-2">
+                            <span class="badge bg-primary-04 listing-category">{{ listing.category|default:"Uncategorized" }}</span>
+                        </div>
+                        
+                        <h5 class="card-title text-arsenic mb-2">{{ listing.title }}</h5>
+                        
+                        <p class="card-text text-graphite flex-grow-1">
+                            {{ listing.description|truncatechars:120 }}
+                        </p>
+                        
+                        <div class="mt-auto">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div>
+                                    <div class="listing-price">${{ listing.item.last.current_bid|default:"No bids" }}</div>
+                                    <small class="text-space">Current bid</small>
+                                </div>
+                                <div class="text-end">
+                                    <small class="text-space d-block">{{ listing.date_created|date:"M d, Y" }}</small>
+                                    <small class="text-space">by {{ listing.user.username }}</small>
+                                </div>
+                            </div>
+                            
+                            <div class="d-grid">
+                                <a href="{% url 'listings:view_listing' listing.id %}" class="btn btn-outline-primary">
+                                    <i class="bi bi-eye me-2"></i>View Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="row">
+            <div class="col-12">
+                <div class="text-center py-5">
+                    <i class="bi bi-search text-steel" style="font-size: 4rem;"></i>
+                    <h3 class="text-arsenic mt-3">No Listings Found</h3>
+                    <p class="text-space">No listings found in the {{ category_name|title }} category.</p>
+                    <a href="{% url 'category_bar' %}" class="btn btn-primary mt-3">
+                        <i class="bi bi-arrow-left me-2"></i>Browse Other Categories
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    {% endif %}
+</div>
+{% endblock %}
