@@ -2,6 +2,12 @@
 
 A modern, responsive auction website built with Django and Bootstrap 5.3.2, featuring a sophisticated moody-gray minimalist design.
 
+## 📸 Screenshot
+
+![Active Listings Page](assets/active_listings.png)
+
+*The Active Listings page showcasing the responsive card layout with Bootstrap styling and moody-gray design.*
+
 ## 🎨 Design Features
 
 ### Color Palette
