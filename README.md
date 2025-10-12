@@ -4,7 +4,8 @@ A modern, responsive auction website built with Django and Bootstrap 5.3.2, feat
 
 ## 📸 Screenshot
 
-![Active Listings Page](assets/active_listings.png)
+<img width="1800" height="1018" alt="Screenshot 2025-10-12 at 4 44 07 pm" src="https://github.com/user-attachments/assets/7daa3838-5682-4355-8a62-af8788b90079" />
+
 
 *The Active Listings page showcasing the responsive card layout with Bootstrap styling and moody-gray design.*
 
