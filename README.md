@@ -1,15 +1,17 @@
-# Commerce - Django Auction Site
+<img width="1800" height="1016" alt="Screenshot 2025-10-12 at 4 52 08 pm" src="https://github.com/user-attachments/assets/b8e390f8-40c0-4d07-8062-8fa6fc3184f7" /># Commerce - Django Auction Site
 
 A modern, responsive auction website built with Django and Bootstrap 5.3.2, featuring a sophisticated moody-gray minimalist design.
 
 ## 📸 Screenshot
 
-<img width="1800" height="1018" alt="Screenshot 2025-10-12 at 4 44 07 pm" src="https://github.com/user-attachments/assets/7daa3838-5682-4355-8a62-af8788b90079" />
+<img width="1800" height="1016" alt="Screenshot 2025-10-12 at 4 52 08 pm" src="https://github.com/user-attachments/assets/70ae6078-4380-41e6-b063-5236260de4be" />
 
 
 *The Active Listings page showcasing the responsive card layout with Bootstrap styling and moody-gray design.*
 
-## 🎨 Design Features
+
+## 🎨 Design Features<img width="1800" height="1016" alt="Screenshot 2025-10-12 at 4 52 08 pm" src="https://github.com/user-attachments/assets/d92dd7fc-6347-4a08-8e6f-574c7d48594d" />
+
 
 ### Color Palette
 - **Primary Color 01** `#FAFBFF` - Backgrounds, highlights
