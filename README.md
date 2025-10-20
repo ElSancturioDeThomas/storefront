@@ -1,4 +1,4 @@
-<img width="1800" height="1016" alt="Screenshot 2025-10-12 at 4 52 08 pm" src="https://github.com/user-attachments/assets/b8e390f8-40c0-4d07-8062-8fa6fc3184f7" /># Commerce - Django Auction Site
+# Commerce - Django Auction Site
 
 A modern, responsive auction website built with Django and Bootstrap 5.3.2, featuring a sophisticated moody-gray minimalist design.
 
